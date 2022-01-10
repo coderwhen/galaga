@@ -8,6 +8,7 @@ const { DefinePlugin } = require("webpack")
 module.exports = {
     mode: "development",
     entry: "./src/main.js",
+    devtool: "source-map",
     output: {
         publicPath: "/",
         filename: "js/game.[hash:6].js",
@@ -94,5 +95,8 @@ module.exports = {
                 }
             ]
         })
-    ]
+    ],
+    devServer: {
+        hot: true
+    }
 }

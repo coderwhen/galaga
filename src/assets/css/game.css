@@ -1,0 +1,116 @@
+html {
+    height: 100%;
+    background: url("../img/background.png");
+}
+
+body {
+    height: 100%;
+}
+
+.game {
+    position: relative;
+    width: 520px;
+    height: 100%;
+    box-shadow: #ffffff33 0 0 10px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: url("../img/background.png") cover;
+}
+
+.game-head {
+    top: 0;
+    left: 0;
+    padding-right: 150px;
+    justify-content: space-around;
+
+}
+
+.game-foot {
+    left: 0;
+    bottom: 0;
+    justify-content: space-between;
+}
+
+.game-head, .game-foot {
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    background: #ffffff22;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+}
+
+.game-body {
+    flex-grow: 1;
+    position: relative;
+    box-sizing: border-box;
+    background: #fff1;
+}
+
+.game-body .bee {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30px;
+    width: 30px;
+    background: url("../img/bee_blue.png") center / cover no-repeat;
+    background-size: 30px 30px;
+    transition: transform .5s;
+}
+
+.game-body .bee-blue {
+    background-image: url("../img/bee_blue.png");
+}
+
+.game-body .bee-green {
+    background-image: url("../img/bee_green.png");
+}
+
+.game-body .bee-red {
+    background-image: url("../img/bee_red.png");
+}
+
+.game-body .bee-small {
+    background-image: url("../img/bee_small.png");
+}
+
+.game-body .plane {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 30px;
+    height: 30px;
+    background: url("../img/plane.png") center / cover no-repeat;
+}
+
+.game-body .plane.bullet::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -30%;
+    height: 20px;
+    width: 3px;
+    background-color: #fff;
+    transform: translate(-50%);
+    box-shadow: #ffffffe2 0 0 15px;
+}
+
+.game-foot .life {
+    display: flex;
+}
+
+.game-foot .life .life-item {
+    height: 30px;
+    width: 30px;
+    margin: 0 7.5px;
+}
+
+.game-foot .life .life-item img {
+    height: 30px;
+    width: 30px;
+    vertical-align: top;
+}
