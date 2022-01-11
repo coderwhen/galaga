@@ -1,4 +1,11 @@
+import Bee from '../model/bee'
+/**
+ * 游戏主舞台dom
+ */
 export const GAME_EL = document.querySelector(".game-body")
+/**
+ * 蜜蜂点阵
+ */
 export const BEE_POINTS = [
     [0, 0, 0, 4, 0, 0, 4, 0, 0, 0],
     [0, 0, 3, 3, 3, 3, 3, 3, 0, 0],
@@ -7,6 +14,19 @@ export const BEE_POINTS = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
+/**
+ * 蜜蜂大小
+ */
+export const BEE_SIZE = 40
+/**
+ * 蜜蜂行宽度
+ */
+export const BEE_ROW_SIZE = BEE_POINTS[0].length * BEE_SIZE
+/**
+ * 
+ * @param {number} bee 蜜蜂type
+ * @returns {string} 蜜蜂type
+ */
 export const getBeeType = (bee) => {
     switch (bee) {
         case 4:
@@ -22,9 +42,28 @@ export const getBeeType = (bee) => {
 
 let index = 0
 
-
+/**
+ * 
+ * @param {string} tag 标签
+ * @returns id
+ */
 export const getNextId = (tag) => {
     return tag ?
         tag + (index++) :
         index++
 }
+export const BEES = {}
+window.Bees = BEES
+/**
+ * 
+ * @param {Bee} Bee 
+ */
+export const pushBee = (Bee) => {
+    const id = Bee.id
+    BEES[id] = Bee
+}
+export const getBee = (id) => {
+    return BEES[id]
+}
+
+window.getBee = getBee

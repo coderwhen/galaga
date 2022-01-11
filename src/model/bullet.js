@@ -1,8 +1,8 @@
 import { Base } from "./base";
 
 class Bullet extends Base {
-    constructor() {
-
+    constructor(target, x, y) {
+        
     }
 }
 

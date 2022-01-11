@@ -11,6 +11,7 @@ class Player extends Base {
         this.enableMove = false
         this.onkeydown = this.onkeydown.bind(this)
         this.onkeyup = this.onkeyup.bind(this)
+        this.awaitBullet()
     }
 
     bind() {
@@ -52,6 +53,12 @@ class Player extends Base {
 
     stopMove() {
         this.enableMove = false
+    }
+
+    awaitBullet() {
+        setTimeout(() => {
+            this.getCurrentEl().classList.add('bullet')
+        }, 200)
     }
 }
 

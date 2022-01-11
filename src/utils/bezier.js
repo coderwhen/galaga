@@ -1,14 +1,14 @@
 class Bezier {
-    constructor(point, unit) {
-        this.point = point;
+    constructor(points, unit) {
+        this.points = points;
         this.unit = unit;
     }
 
     excute() {
         const points = []
         let t = 0;
-        for (let i = 0; i < 120; i++) {
-            t = i / 120;
+        for (let i = 0; i < this.unit; i++) {
+            t = i / this.unit;
             let point = this.calculate(this.points, t);
             points.push(point)
         }
