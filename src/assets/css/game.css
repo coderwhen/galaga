@@ -51,6 +51,7 @@ body {
 .game-body {
     flex-grow: 1;
     position: relative;
+    overflow: hidden;
     box-sizing: border-box;
     background: #fff1;
 }
@@ -91,15 +92,23 @@ body {
     background: url("../img/plane.png") center / cover no-repeat;
 }
 
-.game-body .plane.bullet::after {
+.game-body .plane.attack::after {
     content: "";
     position: absolute;
     left: 50%;
     top: -30%;
-    height: 20px;
+    height: 10px;
     width: 3px;
     background-color: #fff;
     transform: translate(-50%);
+    box-shadow: #ffffffe2 0 0 15px;
+}
+
+.game-body .bullet {
+    position: absolute;
+    height: 10px;
+    width: 3px;
+    background-color: #fff;
     box-shadow: #ffffffe2 0 0 15px;
 }
 

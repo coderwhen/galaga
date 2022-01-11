@@ -74,6 +74,9 @@ class BeeGroup {
         }
         fn()
     }
+    /*
+    * 蜜蜂攻击
+    * */
     attackBee() {
         const timer = setInterval(() => {
             const bees = Object.keys(BEES)

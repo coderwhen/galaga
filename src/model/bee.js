@@ -1,4 +1,4 @@
-import { GAME_EL, getNextId } from "../config/game.config";
+import { BEE_SIZE, getNextId } from "../config/game.config";
 import Base from "./base";
 import Bezier from "../utils/bezier";
 
@@ -7,8 +7,10 @@ import Bezier from "../utils/bezier";
  */
 class Bee extends Base {
     constructor(className, x, y, ox, oy, direction) {
-        super(`bee ${className}`, getNextId('bee-'), x, y)
+        super(`bee ${className}`, getNextId('bee-'), x, y, BEE_SIZE, BEE_SIZE)
         this.rock = false
+        this.tx = x
+        this.ty = y
         this.ox = ox
         this.oy = oy
         this.direction = direction
@@ -24,12 +26,12 @@ class Bee extends Base {
                 [
                     { x: 260, y: -50 },
                     { x: 10, y: 100 },
-                    { x: this.x, y: this.y }
+                    { x: this.tx, y: this.ty }
                 ] :
                 [
                     { x: 260, y: -50 },
                     { x: 520, y: 100 },
-                    { x: this.x, y: this.y }
+                    { x: this.tx, y: this.ty }
                 ], 120)
             const points = bezier.excute()
             this.move(points[i].x, points[i].y)
@@ -55,7 +57,7 @@ class Bee extends Base {
      * @param {*} oy 
      */
     rockMove(ox, oy) {
-        this.x = this.ox + ox
+        this.tx = this.ox + ox
         this.rock && this.move(this.ox + ox, this.oy)
     }
 
@@ -88,6 +90,7 @@ class Bee extends Base {
         const fn = () => {
             this.move(points[i].x, points[i].y)
             i++
+            console.log(this.checkCrash(window.player))
             if (i === bezier.unit * .1) {
                 this.rotate(this.direction ? -180 : 180)
             }

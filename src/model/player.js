@@ -1,17 +1,19 @@
-import { GAME_EL } from "../config/game.config"
+import { BEES, GAME_EL } from "../config/game.config"
 import Base from "./base"
+import Bullet from "./bullet"
 
 class Player extends Base {
     constructor(x, y) {
-        super('plane', 'plane', x, y)
+        super('plane', 'plane', x, y, 30, 30)
         this.dir = {
             a: false,
             d: false
         }
+        this.isAttack = false
         this.enableMove = false
         this.onkeydown = this.onkeydown.bind(this)
         this.onkeyup = this.onkeyup.bind(this)
-        this.awaitBullet()
+        // this.awaitBullet()
     }
 
     bind() {
@@ -26,6 +28,9 @@ class Player extends Base {
     }
 
     onkeydown(e) {
+        if (e.key === " ") {
+            this.attack()
+        }
         this.dir[e.key] = true
     }
 
@@ -57,8 +62,21 @@ class Player extends Base {
 
     awaitBullet() {
         setTimeout(() => {
-            this.getCurrentEl().classList.add('bullet')
-        }, 200)
+            this.getCurrentEl().classList.add('attack')
+            this.isAttack = false
+        }, 1000)
+    }
+
+    attack() {
+        if (this.isAttack) return
+        this.isAttack = true
+        this.getCurrentEl().classList.remove('attack')
+        new Bullet(BEES, this.x + 14.5, this.y)
+        this.awaitBullet()
+    }
+
+    entry() {
+        
     }
 }
 
