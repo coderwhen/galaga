@@ -62,7 +62,7 @@ module.exports = {
             },
             {
                 test: /\.(mp3|ogg)$/,
-                type: "asset/source",
+                type: "asset/resource",
                 generator: {
                     filename: "sound/[name].[hash:6][ext]"
                 }

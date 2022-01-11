@@ -92,6 +92,29 @@ body {
     background: url("../img/plane.png") center / cover no-repeat;
 }
 
+.game-body .plane.destroy,
+.game-body .bee.destroy{
+    animation: destroy 1s ease;
+}
+
+@keyframes destroy {
+    25% {
+        background-image: url("../img/explosion_1.png");
+    }
+
+    50% {
+        background-image: url("../img/explosion_2.png");
+    }
+
+    75% {
+        background-image: url("../img/explosion_3.png");
+    }
+
+    100% {
+        background-image: url("../img/explosion_4.png");
+    }
+}
+
 .game-body .plane.attack::after {
     content: "";
     position: absolute;

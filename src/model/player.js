@@ -1,4 +1,4 @@
-import { BEES, GAME_EL } from "../config/game.config"
+import {BEES, GAME_EL} from "../config/game.config"
 import Base from "./base"
 import Bullet from "./bullet"
 
@@ -11,9 +11,10 @@ class Player extends Base {
         }
         this.isAttack = false
         this.enableMove = false
+        this.isCrash = true
         this.onkeydown = this.onkeydown.bind(this)
         this.onkeyup = this.onkeyup.bind(this)
-        // this.awaitBullet()
+        this.awaitBullet()
     }
 
     bind() {
@@ -71,14 +72,27 @@ class Player extends Base {
         if (this.isAttack) return
         this.isAttack = true
         this.getCurrentEl().classList.remove('attack')
-        new Bullet(BEES, this.x + 14.5, this.y)
+        document.querySelector('#shoot').play()
+        new Bullet(BEES, this.x + 14.5, this.y, false)
         this.awaitBullet()
     }
 
     entry() {
-        
+
+    }
+
+    destroy() {
+        const clone = this.getCurrentEl().cloneNode()
+        clone.id = ""
+        GAME_EL.appendChild(clone)
+        clone.classList.add('destroy')
+        clone.classList.remove('attack')
+        document.querySelector('#destroyed').play()
+        setTimeout(() => {
+            clone.remove()
+        }, 1000)
     }
 }
 
-export { Player }
+export {Player}
 export default Player

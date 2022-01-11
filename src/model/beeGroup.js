@@ -80,9 +80,14 @@ class BeeGroup {
     attackBee() {
         const timer = setInterval(() => {
             const bees = Object.keys(BEES)
+            if(bees.length === 0) {
+                clearInterval(timer)
+                this.createBees()
+                return
+            }
             const r = Math.floor(Math.random() * bees.length)
             BEES[bees[r]].attack()
-        }, 5000);
+        }, 2000);
     }
 }
 

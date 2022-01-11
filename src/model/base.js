@@ -21,6 +21,7 @@ class Base {
         this.y = y
         this.w = w
         this.h = h
+        this.isCrash = false
         this.render(className)
     }
 
@@ -65,12 +66,17 @@ class Base {
      * 检测碰撞
      */
     checkCrash(target) {
+        if(!(this.isCrash || target.isCrash)) return false
         const { x, y, w, h } = this
         const { x: x1, y: y1, w: w1, h: h1 } = target
         const [l1, t1, r1, b1] = [x, y, x + w, y + h]
         const [l2, t2, r2, b2] = [x1, y1, x1 + w1, y1 + h1]
 
         return !(l1 > r2 || t1 > b2 || r1 < l2 || b1 < t2)
+    }
+
+    remove() {
+        this.getCurrentEl().remove()
     }
 }
 

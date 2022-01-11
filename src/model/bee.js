@@ -1,6 +1,7 @@
-import { BEE_SIZE, getNextId } from "../config/game.config";
+import {BEE_SIZE, GAME_EL, getNextId} from "../config/game.config";
 import Base from "./base";
 import Bezier from "../utils/bezier";
+import Bullet from "./bullet";
 
 /**
  * 蜜蜂类
@@ -13,6 +14,8 @@ class Bee extends Base {
         this.ty = y
         this.ox = ox
         this.oy = oy
+        this.isDead = false
+        this.isCrash = false
         this.direction = direction
     }
 
@@ -45,6 +48,7 @@ class Bee extends Base {
             if (i < bezier.unit) {
                 requestAnimationFrame(fn)
             } else {
+                this.isCrash = true
                 this.rock = true
             }
         }
@@ -90,12 +94,15 @@ class Bee extends Base {
         const fn = () => {
             this.move(points[i].x, points[i].y)
             i++
-            console.log(this.checkCrash(window.player))
+            if(this.checkCrash([window.player])) {
+                console.log('1231231231')
+            }
             if (i === bezier.unit * .1) {
                 this.rotate(this.direction ? -180 : 180)
             }
             else if (i === bezier.unit * .3) {
                 this.rotate(this.direction ? -90 : 90)
+                this.sendBullet()
             }
             else if (i === bezier.unit * .6) {
                 this.rotate(this.direction ? -45 : 45)
@@ -109,6 +116,19 @@ class Bee extends Base {
             }
         }
         fn()
+    }
+
+    destroy() {
+        const current = this.getCurrentEl()
+        current.classList.add('destroy')
+        document.querySelector('#hit').play()
+        setTimeout(() => {
+            this.remove()
+        }, 1000)
+    }
+
+    sendBullet() {
+        new Bullet([window.player], this.x ,this.y, true)
     }
 }
 
