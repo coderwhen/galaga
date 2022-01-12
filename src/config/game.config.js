@@ -1,4 +1,5 @@
 import Bee from '../model/bee'
+import Score from "../game/score"
 /**
  * 游戏主舞台dom
  */
@@ -77,5 +78,14 @@ export const getBee = (id) => {
 export const deleteBee = (id) => {
     delete BEES[id]
 }
-
-window.getBee = getBee
+const beeScore = {
+    'bee-small': 10,
+    'bee-red': 8,
+    'bee-blue': 4,
+    'bee-green': 2
+}
+export const getBeeScore = (type) => {
+    return beeScore[type]
+}
+export const score = new Score()
+window.score = score

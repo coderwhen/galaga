@@ -39,7 +39,7 @@ class Bullet extends Base {
                 if(this.checkCrash(value)) {
                     this.remove()
                     deleteBee(value.id)
-                    value.destroy()
+                    value.destroy(true)
                     return
                 }
             }

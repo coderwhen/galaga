@@ -126,7 +126,7 @@ class Player extends Base {
                 x: this.ox,
                 y: this.oy
             }
-        ], 30)
+        ], 60)
         const points = bezier.excute()
         let i = 0
         const fn = () => {
@@ -159,6 +159,7 @@ class Player extends Base {
         if (el) {
             el.remove()
         } else {
+            alert('game-over')
             console.log('game over')
         }
         this.startGod()

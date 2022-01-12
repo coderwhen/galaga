@@ -1,4 +1,4 @@
-import {BEE_SIZE, GAME_EL, getNextId} from "../config/game.config";
+import {BEE_SIZE, deleteBee, getBeeScore, getNextId} from "../config/game.config";
 import Base from "./base";
 import Bezier from "../utils/bezier";
 import Bullet from "./bullet";
@@ -9,6 +9,7 @@ import Bullet from "./bullet";
 class Bee extends Base {
     constructor(className, x, y, ox, oy, direction) {
         super(`bee ${className}`, getNextId('bee-'), x, y, BEE_SIZE, BEE_SIZE)
+        this.type = className
         this.rock = false
         this.tx = x
         this.ty = y
@@ -117,6 +118,7 @@ class Bee extends Base {
             else if (i === bezier.unit * .6) {
                 this.rotate(this.direction ? -45 : 45)
             }
+            if(this.isDead) return
             if (i < bezier.unit) {
                 requestAnimationFrame(fn)
             } else {
@@ -128,10 +130,15 @@ class Bee extends Base {
         fn()
     }
 
-    destroy() {
+    destroy(isPlayerDestroy) {
+        this.isDead = true
+        if(isPlayerDestroy) {
+            window.score.compute(getBeeScore(this.type))
+        }
         const current = this.getCurrentEl()
         current.classList.add('destroy')
         document.querySelector('#hit').play()
+        deleteBee(this.id)
         setTimeout(() => {
             this.remove()
         }, 500)

@@ -1,4 +1,4 @@
-import { BEES, BEE_POINTS, BEE_ROW_SIZE, BEE_SIZE, GAME_EL, getBeeType, pushBee,getBee } from "../config/game.config";
+import {BEES, BEE_POINTS, BEE_ROW_SIZE, BEE_SIZE, GAME_EL, getBeeType, pushBee, getBee} from "../config/game.config";
 import Bee from "./bee";
 
 /**
@@ -6,13 +6,14 @@ import Bee from "./bee";
  */
 class BeeGroup {
     /**
-     * 
+     *
      * @param {number} ox 原点x坐标
      * @param {number} oy 原点y坐标
      */
     constructor(ox, oy) {
         this.ox = ox
         this.oy = oy
+        this.isRock = false
     }
 
     /**
@@ -20,15 +21,15 @@ class BeeGroup {
      */
     createBees() {
         BEE_POINTS.forEach((rowBees, row) => {
-            rowBees.forEach((beeType, colunm) => {
+            rowBees.forEach((beeType, column) => {
                 if (!beeType) return
                 const bee = new Bee(
                     getBeeType(beeType),
-                    colunm * BEE_SIZE + this.ox,
+                    column * BEE_SIZE + this.ox,
                     row * BEE_SIZE + this.oy,
-                    colunm * BEE_SIZE,
+                    column * BEE_SIZE,
                     row * BEE_SIZE,
-                    colunm < BEE_POINTS[0].length / 2
+                    column < BEE_POINTS[0].length / 2
                 )
                 pushBee(bee)
             })
@@ -37,6 +38,7 @@ class BeeGroup {
         this.entryBees()
         this.rockMove()
     }
+
     /**
      * 蜜蜂入场方法
      */
@@ -46,16 +48,18 @@ class BeeGroup {
         const timer = setInterval(() => {
             BEES[bees[i]].entry()
             i++
-            if(i >= bees.length) {
+            if (i >= bees.length) {
                 clearInterval(timer)
                 this.attackBee()
             }
         }, 500)
     }
+
     /**
      * 阵列移动
      */
     rockMove() {
+        this.isRock = true
         const speed = 1
         let x = speed
         const fn = () => {
@@ -70,19 +74,21 @@ class BeeGroup {
             for (const key in BEES) {
                 BEES[key].rockMove(this.ox, this.oy)
             }
-            requestAnimationFrame(fn)
+            this.isRock && requestAnimationFrame(fn)
         }
         fn()
     }
+
     /*
     * 蜜蜂攻击
     * */
     attackBee() {
         const timer = setInterval(() => {
             const bees = GAME_EL.querySelectorAll('.bee.await')
-            if(bees.length === 0) {
-                if(GAME_EL.querySelectorAll('.bee').length === 0) {
+            if (bees.length === 0) {
+                if (GAME_EL.querySelectorAll('.bee').length === 0) {
                     clearInterval(timer)
+                    this.isRock = false
                     setTimeout(() => {
                         this.createBees()
                     }, 400)
