@@ -39,7 +39,7 @@ class Bee extends Base {
             const points = bezier.excute()
             this.move(points[i].x, points[i].y)
             if (i === 5) {
-                this.rotate(this.direction ? 45 : -45)
+                this.rotate(this.direction ? -45 : 45)
             }
             if (i === bezier.unit * .9) {
                 this.rotate(0)
@@ -50,27 +50,34 @@ class Bee extends Base {
             } else {
                 this.isCrash = true
                 this.rock = true
+                this.getCurrentEl().classList.add('await')
             }
         }
         fn()
     }
 
     /**
-     * 
-     * @param {*} ox 
-     * @param {*} oy 
+     * 跟随阵列移动
+     * @param {*} ox 阵列原点x
+     * @param {*} oy 阵列原点y
      */
     rockMove(ox, oy) {
         this.tx = this.ox + ox
-        this.rock && this.move(this.ox + ox, this.oy)
+        this.ty = this.oy + oy
+        this.rock && this.move(this.tx, this.ty)
     }
 
+    /**
+     * 蜜蜂旋转角度
+     * @param {number} deg 旋转角度
+     */
     rotate(deg) {
         const currentDom = this.getCurrentEl()
         currentDom.style.transform = `rotate(${deg}deg)`
     }
 
     attack() {
+        this.getCurrentEl().classList.remove('await')
         this.rock = false
         const bezier = new Bezier(this.direction ?
             [
@@ -94,15 +101,18 @@ class Bee extends Base {
         const fn = () => {
             this.move(points[i].x, points[i].y)
             i++
-            if(this.checkCrash([window.player])) {
-                console.log('1231231231')
+            if(this.checkCrash(window.player)) {
+                window.player.destroy()
+                this.destroy()
+                this.isCrash = false
+                return
             }
             if (i === bezier.unit * .1) {
                 this.rotate(this.direction ? -180 : 180)
+                this.sendBullet()
             }
             else if (i === bezier.unit * .3) {
                 this.rotate(this.direction ? -90 : 90)
-                this.sendBullet()
             }
             else if (i === bezier.unit * .6) {
                 this.rotate(this.direction ? -45 : 45)
@@ -124,7 +134,7 @@ class Bee extends Base {
         document.querySelector('#hit').play()
         setTimeout(() => {
             this.remove()
-        }, 1000)
+        }, 500)
     }
 
     sendBullet() {

@@ -1,4 +1,4 @@
-import { BEES, BEE_POINTS, BEE_ROW_SIZE, BEE_SIZE, GAME_EL, getBeeType, pushBee } from "../config/game.config";
+import { BEES, BEE_POINTS, BEE_ROW_SIZE, BEE_SIZE, GAME_EL, getBeeType, pushBee,getBee } from "../config/game.config";
 import Bee from "./bee";
 
 /**
@@ -27,7 +27,7 @@ class BeeGroup {
                     colunm * BEE_SIZE + this.ox,
                     row * BEE_SIZE + this.oy,
                     colunm * BEE_SIZE,
-                    row * BEE_SIZE + this.oy,
+                    row * BEE_SIZE,
                     colunm < BEE_POINTS[0].length / 2
                 )
                 pushBee(bee)
@@ -79,14 +79,18 @@ class BeeGroup {
     * */
     attackBee() {
         const timer = setInterval(() => {
-            const bees = Object.keys(BEES)
+            const bees = GAME_EL.querySelectorAll('.bee.await')
             if(bees.length === 0) {
-                clearInterval(timer)
-                this.createBees()
+                if(GAME_EL.querySelectorAll('.bee').length === 0) {
+                    clearInterval(timer)
+                    setTimeout(() => {
+                        this.createBees()
+                    }, 400)
+                }
                 return
             }
             const r = Math.floor(Math.random() * bees.length)
-            BEES[bees[r]].attack()
+            getBee(bees[r].id).attack()
         }, 2000);
     }
 }

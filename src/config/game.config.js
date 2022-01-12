@@ -62,8 +62,20 @@ export const pushBee = (Bee) => {
     const id = Bee.id
     BEES[id] = Bee
 }
+/**
+ * 获取指定标识的蜜蜂
+ * @param id 蜜蜂标识
+ * @returns {Bee} bee
+ */
 export const getBee = (id) => {
     return BEES[id]
+}
+/**
+ * 删除指定标识的蜜蜂
+ * @param id 蜜蜂标识
+ */
+export const deleteBee = (id) => {
+    delete BEES[id]
 }
 
 window.getBee = getBee

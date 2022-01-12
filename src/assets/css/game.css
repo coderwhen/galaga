@@ -92,9 +92,22 @@ body {
     background: url("../img/plane.png") center / cover no-repeat;
 }
 
+.game-body .plane.god {
+    animation: god .5s infinite;
+}
+
+@keyframes god {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .game-body .plane.destroy,
 .game-body .bee.destroy{
-    animation: destroy 1s ease;
+    animation: destroy .5s ease;
 }
 
 @keyframes destroy {

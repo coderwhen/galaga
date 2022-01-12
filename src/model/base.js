@@ -66,7 +66,7 @@ class Base {
      * 检测碰撞
      */
     checkCrash(target) {
-        if(!(this.isCrash || target.isCrash)) return false
+        if(!target.isCrash) return false
         const { x, y, w, h } = this
         const { x: x1, y: y1, w: w1, h: h1 } = target
         const [l1, t1, r1, b1] = [x, y, x + w, y + h]
