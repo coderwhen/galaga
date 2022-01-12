@@ -1,4 +1,5 @@
 import Bee from '../model/bee'
+import Score from "../game/score"
 /**
  * 游戏主舞台dom
  */
@@ -62,8 +63,29 @@ export const pushBee = (Bee) => {
     const id = Bee.id
     BEES[id] = Bee
 }
+/**
+ * 获取指定标识的蜜蜂
+ * @param id 蜜蜂标识
+ * @returns {Bee} bee
+ */
 export const getBee = (id) => {
     return BEES[id]
 }
-
-window.getBee = getBee
+/**
+ * 删除指定标识的蜜蜂
+ * @param id 蜜蜂标识
+ */
+export const deleteBee = (id) => {
+    delete BEES[id]
+}
+const beeScore = {
+    'bee-small': 10,
+    'bee-red': 8,
+    'bee-blue': 4,
+    'bee-green': 2
+}
+export const getBeeScore = (type) => {
+    return beeScore[type]
+}
+export const score = new Score()
+window.score = score
