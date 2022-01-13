@@ -23,7 +23,7 @@
     "webpack-dev-server": "^4.7.2"
   },
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --config=config\\webpack.pro.js",
     "serve": "webpack serve"
   },
   "repository": {
