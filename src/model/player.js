@@ -49,7 +49,7 @@ class Player extends Base {
      * @param e
      */
     onkeydown(e) {
-        if (e.key === " ") {
+        if (e.key === " " || e.key === "Spacebar") {
             this.attack()
         }
         this.dir[e.key] = true
@@ -159,8 +159,12 @@ class Player extends Base {
         if (el) {
             el.remove()
         } else {
-            alert('game-over')
-            console.log('game over')
+            // alert('game-over')
+            // console.log('game over')
+            this.isCrash = false
+            this.unBind()
+            window.game.over()
+            return
         }
         this.startGod()
         this.entry()
