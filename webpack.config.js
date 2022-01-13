@@ -7,7 +7,7 @@ const { DefinePlugin } = require("webpack")
 
 module.exports = {
     mode: "development",
-    entry: "./src/main.js",
+    entry: ["@babel/polyfill","./src/main.js"],
     devtool: "source-map",
     output: {
         publicPath: "/",
